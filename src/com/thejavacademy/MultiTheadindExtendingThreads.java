@@ -3,7 +3,6 @@ package com.thejavacademy;
 public class MultiTheadindExtendingThreads {
 
     public static void main(String[] args) throws InterruptedException {
-
         Thread counter1 = new IteratorThead("counter1");
         Thread counter2 = new IteratorThead("counter2");
 

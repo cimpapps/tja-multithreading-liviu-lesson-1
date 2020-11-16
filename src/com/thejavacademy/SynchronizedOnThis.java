@@ -9,6 +9,7 @@ public class SynchronizedOnThis {
         incThread.start();
         //getNumber will not execute in the same time as incrementAndSleep3 because they are synchronized on the same monitor
         getNrThread.start();
+
     }
 }
 
@@ -35,8 +36,10 @@ class SyncOnThisIncrementor {
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
+            System.out.println(Thread.interrupted());
             e.printStackTrace();
             Thread.currentThread().interrupt();
+            System.out.println(Thread.interrupted());
         }
     }
 }
