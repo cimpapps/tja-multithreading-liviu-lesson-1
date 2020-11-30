@@ -1,0 +1,12 @@
+package com.thejavacademy.executors;
+
+
+public class SerialExecutionExample {
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 1000000; i++) {
+             System.out.println(Thread.currentThread());
+        }
+
+    }
+}

@@ -7,7 +7,10 @@ import java.util.List;
 public class ImmutableExample {
     public static void main(String[] args) {
         ImmutableObject allmostImmutableObject = new ImmutableObject("Liviu", Arrays.asList("1", "2"));
-        new Thread(() -> allmostImmutableObject.getChildren().add(String.valueOf(System.currentTimeMillis())));
+        for (int i = 0; i < 10000; i++) {
+            new Thread(() -> allmostImmutableObject.getChildren().add(String.valueOf(System.currentTimeMillis())));
+        }
+        // READ MODIFY WRITE
 
     }
 }
@@ -21,6 +24,7 @@ final class ImmutableObject {
         this.name = name;
         this.children = children;
     }
+
 
     public String getName() {
         return name;

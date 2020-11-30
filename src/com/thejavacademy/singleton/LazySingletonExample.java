@@ -4,6 +4,8 @@ public class LazySingletonExample {
 
     private static volatile LazySingletonExample SINGLETON = null;
 
+
+
     private LazySingletonExample() {
     }
 

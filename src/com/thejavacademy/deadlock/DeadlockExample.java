@@ -5,8 +5,9 @@ public class DeadlockExample {
     public static void main(String[] args) {
 
         NumberHolder numberHolder = new NumberHolder();
+        NumberHolder numberHolder2 = new NumberHolder();
         Thread thread1 = new Thread(() -> numberHolder.incrementNumber());
-        Thread thread2 = new Thread(() -> numberHolder.getNumber());
+        Thread thread2 = new Thread(() -> numberHolder2.getNumber());
         thread1.start();
         thread2.start();
 
@@ -18,15 +19,16 @@ class NumberHolder {
 
     private int numberA;
     private int numberB;
-
+    private final Object lock1 = new Object();
+    private final Object lock2 = new Object();
 
     public void incrementNumber() {
         System.out.println(Color.GREEN.getColor() + " " + Thread.currentThread() + " trying to get lock a ");
-        synchronized ("a") {
+        synchronized (lock1) {
             System.out.println(Color.GREEN.getColor() + " " + Thread.currentThread() + " got lock a ");
             sleep();
             System.out.println(Color.GREEN.getColor() + " " + Thread.currentThread() + " trying to get lock b ");
-            synchronized ("b") {
+            synchronized (lock2) {
                 System.out.println(Color.GREEN.getColor() + " " + Thread.currentThread() + " got lock b ");
                 sleep();
                 numberA += numberB;
@@ -37,11 +39,11 @@ class NumberHolder {
 
     public void getNumber() {
         System.out.println(Color.BLUE.getColor() + " " + Thread.currentThread() + " trying to get lock b ");
-        synchronized ("b") {
+        synchronized (lock2) {
             System.out.println(Color.BLUE.getColor() + " " + Thread.currentThread() + " got lock b ");
             sleep();
             System.out.println(Color.BLUE.getColor() + " " + Thread.currentThread() + " trying to get lock a ");
-            synchronized ("a") {
+            synchronized (lock1) {
                 System.out.println(Color.BLUE.getColor() + " " + Thread.currentThread() + " got lock a ");
                 sleep();
                 numberA += numberB;

@@ -1,12 +1,24 @@
 package com.thejavacademy.immutable;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NonImmutableExample {
     public static void main(String[] args) {
-        AllmostImmutableObject allmostImmutableObject = new AllmostImmutableObject("Liviu", Arrays.asList("1", "2"));
-        new Thread(() -> allmostImmutableObject.getChildren().add(String.valueOf(System.currentTimeMillis())));
+        List<String> children = new ArrayList<>();
+        children.add("1");
+        children.add("2");
+        AllmostImmutableObject allmostImmutableObject = new AllmostImmutableObject("Liviu", children);
+        for (int i = 0; i < 10; i++) {
+
+            new Thread(() -> {
+                for (int j = 0; j < 100000; j++) {
+                    int k = j;
+                    allmostImmutableObject.getChildren().add(String.valueOf(k));
+                }
+            }).start();
+        }
+
 
     }
 }
@@ -26,6 +38,7 @@ final class AllmostImmutableObject {
     }
 
     public List<String> getChildren() {
+        System.out.println(children.size());
         return children;
     }
 

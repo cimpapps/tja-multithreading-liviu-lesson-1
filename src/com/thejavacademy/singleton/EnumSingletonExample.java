@@ -1,6 +1,6 @@
 package com.thejavacademy.singleton;
 
-public enum  EnumSingletonExample {
+public enum EnumSingletonExample {
     SINGLETON;
 
     public void doSomething() {
